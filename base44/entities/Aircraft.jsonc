@@ -1,0 +1,209 @@
+{
+  "name": "Aircraft",
+  "type": "object",
+  "properties": {
+    "tail_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Reference to Customer entity"
+    },
+    "make": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string",
+      "description": "URL of the aircraft photo"
+    },
+    "aircraft_category": {
+      "type": "string",
+      "enum": [
+        "Piston Single / Light Aircraft",
+        "Turboprop",
+        "Light Jet",
+        "Midsize Jet",
+        "Super Midsize / Heavy Jet",
+        "High Turn Charter"
+      ]
+    },
+    "severity_profile": {
+      "type": "string",
+      "enum": [
+        "Light use",
+        "Moderate use",
+        "Heavy use",
+        "Charter / high turn",
+        "Harsh environment"
+      ]
+    },
+    "orbit_plan": {
+      "type": "string"
+    },
+    "base_airport": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "grounded",
+        "archived"
+      ],
+      "default": "active"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "tracking_mode": {
+      "type": "string",
+      "enum": [
+        "hours_only",
+        "cycles_only",
+        "days_only",
+        "hours_days",
+        "cycles_days",
+        "hours_cycles",
+        "hours_cycles_days"
+      ],
+      "default": "hours_days",
+      "description": "Service tracking method for this aircraft"
+    },
+    "track_hours": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track service by flight hours"
+    },
+    "track_cycles": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to track service by flight cycles"
+    },
+    "track_days": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to track service by calendar days"
+    },
+    "last_orbit_baseline_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Most recent Reset or ORBIT Service date \u2014 marks start of protection window"
+    },
+    "last_orbit_total_hours": {
+      "type": "number",
+      "default": 0
+    },
+    "last_orbit_total_cycles": {
+      "type": "number",
+      "default": 0
+    },
+    "current_total_hours": {
+      "type": "number",
+      "default": 0
+    },
+    "current_total_cycles": {
+      "type": "number",
+      "default": 0
+    },
+    "hours_since_orbit": {
+      "type": "number",
+      "default": 0,
+      "description": "Reference field only \u2014 not used for status calculation"
+    },
+    "cycles_since_orbit": {
+      "type": "number",
+      "default": 0,
+      "description": "Reference field only \u2014 not used for status calculation"
+    },
+    "days_since_orbit": {
+      "type": "number",
+      "default": 0,
+      "description": "Calculated days since last_orbit_baseline_date using standardized dateUtils"
+    },
+    "orbit_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Aircraft ORBIT score (0-100) with 30-day protection window applied"
+    },
+    "condition_index": {
+      "type": "number",
+      "default": 100,
+      "description": "JetGlow Condition Index (100 - orbit_score), forced to 100 during protection window"
+    },
+    "within_protection_window": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if days_since_orbit < 30"
+    },
+    "orbit_status": {
+      "type": "string",
+      "enum": [
+        "Green",
+        "Amber",
+        "Red"
+      ],
+      "default": "Green",
+      "description": "Aircraft orbit status from service-level tracking"
+    },
+    "worst_service_score": {
+      "type": "number",
+      "default": 0
+    },
+    "worst_service_name": {
+      "type": "string"
+    },
+    "worst_service_due_by": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "cycles"
+      ]
+    },
+    "worst_service_trigger_source": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "cycles"
+      ]
+    },
+    "overdue_count": {
+      "type": "number",
+      "default": 0
+    },
+    "due_soon_count": {
+      "type": "number",
+      "default": 0
+    },
+    "healthy_count": {
+      "type": "number",
+      "default": 0
+    },
+    "active_attention_count": {
+      "type": "number",
+      "default": 0
+    },
+    "client_condition_label": {
+      "type": "string"
+    },
+    "client_condition_message": {
+      "type": "string"
+    },
+    "last_orbit_summary_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last orbit summary calculation"
+    },
+    "next_service_recommendation": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tail_number"
+  ]
+}

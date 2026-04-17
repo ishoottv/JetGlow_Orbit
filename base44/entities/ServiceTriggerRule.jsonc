@@ -1,0 +1,197 @@
+{
+  "name": "ServiceTriggerRule",
+  "type": "object",
+  "properties": {
+    "service_name": {
+      "type": "string",
+      "description": "Human-readable service name"
+    },
+    "service_code": {
+      "type": "string",
+      "description": "Short code for the service"
+    },
+    "service_category": {
+      "type": "string",
+      "enum": [
+        "Monthly",
+        "Quarterly",
+        "Semiannual",
+        "Yearly"
+      ],
+      "description": "UI grouping only \u2014 do NOT use for logic decisions. Used strictly for display and organization."
+    },
+    "visit_group": {
+      "type": "string",
+      "enum": [
+        "exterior",
+        "interior",
+        "brightwork",
+        "protection",
+        "correction"
+      ],
+      "description": "UI grouping, visit scope organization, and reporting"
+    },
+    "work_class": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "semiannual",
+        "yearly"
+      ],
+      "default": "monthly",
+      "description": "PRIMARY and ONLY logic driver for service frequency classification. Do not use service_category for scoring."
+    },
+    "tracking_type": {
+      "type": "string",
+      "enum": [
+        "hours",
+        "cycles",
+        "days"
+      ],
+      "default": "days",
+      "description": "Which metric drives this service's trigger calculation. Only this metric is used."
+    },
+    "subscription_scope_type": {
+      "type": "string",
+      "enum": [
+        "monthly_included",
+        "rotational_included",
+        "correction_controlled",
+        "exception_upgrade"
+      ],
+      "description": "How this service fits into the ORBIT subscription scope"
+    },
+    "always_evaluate": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, service is evaluated every ORBIT visit. However, it is only included if due, or if included_by_default is true."
+    },
+    "effort_mode": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "variable"
+      ],
+      "default": "fixed",
+      "description": "fixed=predictable time every visit; variable=workload scales with usage, environment, or contamination level"
+    },
+    "included_by_default": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, service is automatically included in ORBIT visit scope unless explicitly excluded"
+    },
+    "max_labor_hours_per_visit": {
+      "type": "number",
+      "description": "Maximum labor hours allowed for this service in a single ORBIT visit."
+    },
+    "service_intensity_levels": {
+      "type": "object",
+      "description": "Optional scaling for variable-effort services. Structure: { light: {}, moderate: {}, heavy: {} }",
+      "properties": {
+        "light": {
+          "type": "object"
+        },
+        "moderate": {
+          "type": "object"
+        },
+        "heavy": {
+          "type": "object"
+        }
+      }
+    },
+    "applies_to_category": {
+      "type": "string",
+      "enum": [
+        "Piston Single / Light Aircraft",
+        "Turboprop",
+        "Light Jet",
+        "Midsize Jet",
+        "Super Midsize / Heavy Jet",
+        "All"
+      ],
+      "description": "Aircraft category this rule applies to. Use 'All' to apply universally."
+    },
+    "applies_to_aircraft_master_id": {
+      "type": "string",
+      "description": "Optional: specific aircraft ID for aircraft-specific rules."
+    },
+    "day_interval": {
+      "type": "number",
+      "description": "Base calendar day interval before service is due. Used when tracking_type = 'days'."
+    },
+    "hour_interval": {
+      "type": "number",
+      "description": "Base flight hour interval before service is due. Used when tracking_type = 'hours'."
+    },
+    "cycle_interval": {
+      "type": "number",
+      "description": "Base flight cycle interval before service is due. Used when tracking_type = 'cycles'."
+    },
+    "due_soon_percent": {
+      "type": "number",
+      "default": 80,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage threshold (0-100) at which service enters Amber status."
+    },
+    "severity_light_multiplier": {
+      "type": "number",
+      "default": 1.1
+    },
+    "severity_moderate_multiplier": {
+      "type": "number",
+      "default": 1.0
+    },
+    "severity_heavy_multiplier": {
+      "type": "number",
+      "default": 0.85
+    },
+    "severity_charter_multiplier": {
+      "type": "number",
+      "default": 0.7
+    },
+    "severity_harsh_environment_multiplier": {
+      "type": "number",
+      "default": 0.6
+    },
+    "condition_weight": {
+      "type": "number",
+      "default": 10,
+      "minimum": 0
+    },
+    "service_priority_weight": {
+      "type": "number",
+      "default": 100,
+      "minimum": 0
+    },
+    "exception_threshold": {
+      "type": "number"
+    },
+    "upgrade_recommendation_type": {
+      "type": "string",
+      "enum": [
+        "add_on_quote",
+        "reset_recommendation",
+        "plan_upgrade",
+        "immediate_attention"
+      ]
+    },
+    "trigger_priority": {
+      "type": "number",
+      "default": 100
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "service_name",
+    "service_code",
+    "applies_to_category"
+  ]
+}

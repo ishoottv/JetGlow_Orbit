@@ -1,0 +1,118 @@
+{
+  "name": "OrbitPlan",
+  "type": "object",
+  "properties": {
+    "plan_name": {
+      "type": "string",
+      "description": "Name of the ORBIT subscription plan"
+    },
+    "plan_tier": {
+      "type": "string",
+      "enum": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ],
+      "description": "Commercial plan tier level"
+    },
+    "default_severity_profile": {
+      "type": "string",
+      "enum": [
+        "Light use",
+        "Moderate use",
+        "Heavy use",
+        "Charter / high turn",
+        "Harsh environment"
+      ],
+      "default": "Moderate use",
+      "description": "Default operating severity assumption for aircraft assigned to this plan"
+    },
+    "included_scheduled_visits_per_year": {
+      "type": "number",
+      "default": 12,
+      "description": "Number of scheduled ORBIT visits included annually in the plan"
+    },
+    "target_visit_spacing_days": {
+      "type": "number",
+      "default": 30,
+      "description": "Target spacing between scheduled ORBIT visits for planning purposes"
+    },
+    "expected_hours_per_month": {
+      "type": "number",
+      "default": 50,
+      "description": "Expected monthly flight hours for this plan"
+    },
+    "expected_cycles_per_month": {
+      "type": "number",
+      "default": 30,
+      "description": "Expected monthly flight cycles for this plan"
+    },
+    "always_included_service_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Service codes always included during scheduled ORBIT visits"
+    },
+    "trigger_based_service_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Service codes included when service trigger thresholds are met"
+    },
+    "max_correction_controlled_services_per_visit": {
+      "type": "number",
+      "default": 2,
+      "description": "Maximum number of correction-controlled services allowed during a single ORBIT visit"
+    },
+    "exception_service_policy": {
+      "type": "string",
+      "enum": [
+        "excluded",
+        "customer_approval_required",
+        "manager_discretion",
+        "separately_quoted"
+      ],
+      "default": "excluded",
+      "description": "How exception services are handled when they fall outside normal ORBIT inclusion"
+    },
+    "plan_upgrade_threshold_hours": {
+      "type": "number",
+      "default": 120,
+      "description": "Monthly flight hours threshold above which a plan upgrade should be recommended"
+    },
+    "plan_upgrade_threshold_cycles": {
+      "type": "number",
+      "default": 60,
+      "description": "Monthly flight cycles threshold above which a plan upgrade should be recommended"
+    },
+    "billing_frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "annual"
+      ],
+      "default": "monthly",
+      "description": "Billing frequency for the plan"
+    },
+    "plan_description": {
+      "type": "string",
+      "description": "Customer-facing summary of what the plan includes"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes, terms, or administrative comments"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the plan is available for new assignments"
+    }
+  },
+  "required": [
+    "plan_name",
+    "plan_tier"
+  ]
+}

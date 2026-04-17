@@ -1,0 +1,91 @@
+{
+  "name": "AircraftServiceTriggerOverride",
+  "type": "object",
+  "properties": {
+    "aircraft_id": {
+      "type": "string",
+      "description": "Reference to Aircraft"
+    },
+    "service_code": {
+      "type": "string",
+      "description": "Service code being overridden"
+    },
+    "service_name": {
+      "type": "string",
+      "description": "Service name (for display)"
+    },
+    "use_custom_rules": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether custom interval rules are enabled for this service"
+    },
+    "service_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "If false, this service is disabled for the aircraft and excluded from trigger calculations."
+    },
+    "day_interval": {
+      "type": "number",
+      "description": "Custom day interval override"
+    },
+    "hour_interval": {
+      "type": "number",
+      "description": "Custom hour interval override"
+    },
+    "cycle_interval": {
+      "type": "number",
+      "description": "Custom cycle interval override"
+    },
+    "due_soon_percent": {
+      "type": "number",
+      "description": "Custom due soon threshold (0-100)"
+    },
+    "grace_period_hours": {
+      "type": "number",
+      "description": "Grace period before service is marked overdue"
+    },
+    "work_class": {
+      "type": "string",
+      "enum": [
+        "base_included",
+        "rotational_included",
+        "correction_controlled",
+        "full_correction"
+      ],
+      "description": "Custom work class for this service on this aircraft"
+    },
+    "trigger_priority": {
+      "type": "number",
+      "description": "Custom priority in visit build order"
+    },
+    "use_aircraft_tracking_default": {
+      "type": "boolean",
+      "default": true,
+      "description": "If true, use aircraft tracking settings; if false, use service-level tracking override"
+    },
+    "service_track_hours": {
+      "type": "boolean",
+      "default": true,
+      "description": "Custom: track by flight hours (only used if use_aircraft_tracking_default=false)"
+    },
+    "service_track_cycles": {
+      "type": "boolean",
+      "default": false,
+      "description": "Custom: track by flight cycles (only used if use_aircraft_tracking_default=false)"
+    },
+    "service_track_days": {
+      "type": "boolean",
+      "default": true,
+      "description": "Custom: track by calendar days (only used if use_aircraft_tracking_default=false)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Aircraft-specific notes about this service"
+    }
+  },
+  "required": [
+    "aircraft_id",
+    "service_code",
+    "service_name"
+  ]
+}

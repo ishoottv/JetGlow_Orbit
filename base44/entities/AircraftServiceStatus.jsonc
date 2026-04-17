@@ -1,0 +1,349 @@
+{
+  "name": "AircraftServiceStatus",
+  "type": "object",
+  "properties": {
+    "aircraft_id": {
+      "type": "string",
+      "description": "Reference to Aircraft"
+    },
+    "service_name": {
+      "type": "string"
+    },
+    "service_code": {
+      "type": "string"
+    },
+    "last_service_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Last time this service was completed"
+    },
+    "last_service_total_hours": {
+      "type": "number",
+      "default": 0
+    },
+    "last_service_total_cycles": {
+      "type": "number",
+      "default": 0
+    },
+    "days_since_last_service": {
+      "type": "number",
+      "default": 0
+    },
+    "hours_since_last_service": {
+      "type": "number",
+      "default": 0
+    },
+    "cycles_since_last_service": {
+      "type": "number",
+      "default": 0
+    },
+    "applicable_day_interval": {
+      "type": "number",
+      "description": "Day interval after severity multiplier applied"
+    },
+    "applicable_hour_interval": {
+      "type": "number",
+      "description": "Hour interval after severity multiplier applied"
+    },
+    "applicable_cycle_interval": {
+      "type": "number",
+      "description": "Cycle interval after severity multiplier applied"
+    },
+    "due_by_days": {
+      "type": "number",
+      "default": 0,
+      "description": "days_since / day_interval ratio"
+    },
+    "due_by_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "hours_since / hour_interval ratio"
+    },
+    "due_by_cycles": {
+      "type": "number",
+      "default": 0,
+      "description": "cycles_since / cycle_interval ratio"
+    },
+    "days_remaining": {
+      "type": "number",
+      "description": "Days remaining until due (applicable_day_interval - days_since_last_service)"
+    },
+    "hours_remaining": {
+      "type": "number",
+      "description": "Hours remaining until due (applicable_hour_interval - hours_since_last_service)"
+    },
+    "cycles_remaining": {
+      "type": "number",
+      "description": "Cycles remaining until due (applicable_cycle_interval - cycles_since_last_service)"
+    },
+    "service_trigger_score": {
+      "type": "number",
+      "default": 0,
+      "description": "MAX of due_by_* values (only from active tracking dimensions)"
+    },
+    "service_status": {
+      "type": "string",
+      "enum": [
+        "Green",
+        "Amber",
+        "Red",
+        "No Interval"
+      ],
+      "default": "Green",
+      "description": "Orbit service status based on trigger score"
+    },
+    "service_due": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if service_trigger_score >= 1.00"
+    },
+    "service_overdue": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if service_trigger_score > 1.00"
+    },
+    "due_by": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "cycles"
+      ],
+      "description": "Which interval is driving the service_trigger_score"
+    },
+    "trigger_source": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "cycles"
+      ],
+      "description": "Which interval is the worst (highest score source)"
+    },
+    "recommended_this_visit": {
+      "type": "boolean",
+      "default": false
+    },
+    "effort_level": {
+      "type": "string",
+      "enum": [
+        "light",
+        "moderate",
+        "heavy"
+      ],
+      "description": "Effort level for visit-evaluated services (belly clean, leading edge, spot decon)"
+    },
+    "correction_hours_remaining": {
+      "type": "number",
+      "default": 0,
+      "description": "For correction_controlled services: remaining work hours to distribute"
+    },
+    "correction_cycles_remaining": {
+      "type": "number",
+      "default": 0,
+      "description": "For correction_controlled services: remaining cycles to distribute"
+    },
+    "condition_override_status": {
+      "type": "string",
+      "enum": [
+        "watch",
+        "due_soon",
+        "due_now",
+        "none"
+      ],
+      "default": "none"
+    },
+    "override_reason": {
+      "type": "string"
+    },
+    "work_class": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "semiannual",
+        "yearly"
+      ],
+      "description": "Rule classification: primary logic driver for service frequency"
+    },
+    "visit_group": {
+      "type": "string",
+      "enum": [
+        "exterior",
+        "interior",
+        "brightwork",
+        "protection",
+        "correction"
+      ],
+      "description": "Rule classification: UI grouping, visit scope organization, and reporting"
+    },
+    "subscription_scope_type": {
+      "type": "string",
+      "enum": [
+        "monthly_included",
+        "rotational_included",
+        "correction_controlled",
+        "exception_upgrade"
+      ],
+      "description": "Rule classification: how this service fits into the ORBIT subscription scope"
+    },
+    "always_evaluate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Rule behavior: if true, service is evaluated every ORBIT visit"
+    },
+    "included_by_default": {
+      "type": "boolean",
+      "default": false,
+      "description": "Rule behavior: if true, service is automatically included in ORBIT visit scope unless excluded"
+    },
+    "effort_mode": {
+      "type": "string",
+      "enum": [
+        "fixed",
+        "variable"
+      ],
+      "description": "Rule behavior: fixed=predictable time, variable=scales with usage/environment"
+    },
+    "max_labor_hours_per_visit": {
+      "type": "number",
+      "description": "Rule behavior: maximum labor hours allowed for this service in a single ORBIT visit"
+    },
+    "condition_weight": {
+      "type": "number",
+      "default": 10,
+      "minimum": 0,
+      "description": "Rule priority: relative weighting for JetGlow Condition Index calculation"
+    },
+    "service_priority_weight": {
+      "type": "number",
+      "default": 25,
+      "minimum": 0,
+      "description": "Operational priority weight for tie-breaking when services have identical scores (higher = more important)"
+    },
+    "trigger_priority": {
+      "type": "number",
+      "default": 100,
+      "description": "Rule priority: lower number = higher priority in visit build order"
+    },
+    "exception_threshold": {
+      "type": "number",
+      "description": "Rule priority: trigger score threshold at which service escalates beyond normal ORBIT handling"
+    },
+    "upgrade_recommendation_type": {
+      "type": "string",
+      "enum": [
+        "add_on_quote",
+        "reset_recommendation",
+        "plan_upgrade",
+        "immediate_attention"
+      ],
+      "description": "Rule priority: recommendation type generated when exception_threshold is exceeded"
+    },
+    "due_soon_percent_applied": {
+      "type": "number",
+      "default": 80,
+      "description": "Applied scoring context: actual due soon threshold percent used when this status was calculated"
+    },
+    "severity_profile_applied": {
+      "type": "string",
+      "enum": [
+        "Light use",
+        "Moderate use",
+        "Heavy use",
+        "Charter / high turn",
+        "Harsh environment"
+      ],
+      "description": "Applied scoring context: severity profile that was active during calculation"
+    },
+    "severity_multiplier_applied": {
+      "type": "number",
+      "description": "Applied scoring context: actual severity multiplier used for this service calculation"
+    },
+    "tracking_mode_applied": {
+      "type": "string",
+      "description": "Applied scoring context: aircraft tracking mode used (hours_only, cycles_only, etc.)"
+    },
+    "track_hours_applied": {
+      "type": "boolean",
+      "description": "Applied scoring context: whether hours were tracked"
+    },
+    "track_cycles_applied": {
+      "type": "boolean",
+      "description": "Applied scoring context: whether cycles were tracked"
+    },
+    "track_days_applied": {
+      "type": "boolean",
+      "description": "Applied scoring context: whether days were tracked"
+    },
+    "tracking_source": {
+      "type": "string",
+      "enum": [
+        "aircraft_default",
+        "service_override"
+      ],
+      "description": "Applied scoring context: whether tracking came from aircraft default or service-level override"
+    },
+    "recommended_reason": {
+      "type": "string",
+      "description": "Visit-planning: why the service is recommended this visit (due, due soon, always evaluate, included by default, condition override, correction carryover, etc.)"
+    },
+    "exception_triggered": {
+      "type": "boolean",
+      "default": false,
+      "description": "Visit-planning: whether exception_threshold has been exceeded"
+    },
+    "condition_driver": {
+      "type": "string",
+      "enum": [
+        "days",
+        "hours",
+        "cycles",
+        "override",
+        "none"
+      ],
+      "description": "Visit-planning: which factor is currently driving the highest trigger score"
+    },
+    "last_calculated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Visit-planning: timestamp of the most recent service status calculation"
+    },
+    "recommended_action": {
+      "type": "string",
+      "enum": [
+        "none",
+        "recommend",
+        "include_now",
+        "immediate_attention",
+        "quote_add_on",
+        "recommend_reset",
+        "recommend_plan_upgrade"
+      ],
+      "default": "none",
+      "description": "Trigger Action Layer: actionable decision based on trigger score and rule context"
+    },
+    "is_included_this_visit": {
+      "type": "boolean",
+      "default": false,
+      "description": "Trigger Action Layer: whether this service should be included in the current ORBIT visit"
+    },
+    "deferred_reason": {
+      "type": "string",
+      "enum": [
+        "labor_limit",
+        "correction_limit",
+        "plan_exclusion",
+        "manager_override",
+        "none"
+      ],
+      "default": "none",
+      "description": "Trigger Action Layer: reason why a due service is deferred from inclusion"
+    }
+  },
+  "required": [
+    "aircraft_id",
+    "service_name",
+    "service_code"
+  ]
+}

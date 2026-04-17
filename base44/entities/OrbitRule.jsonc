@@ -1,0 +1,76 @@
+{
+  "name": "OrbitRule",
+  "type": "object",
+  "properties": {
+    "rule_name": {
+      "type": "string",
+      "description": "Name of the ORBIT rule set"
+    },
+    "aircraft_class": {
+      "type": "string",
+      "enum": [
+        "Piston Single / Light Aircraft",
+        "Turboprop",
+        "Light Jet",
+        "Midsize Jet",
+        "Super Midsize / Heavy Jet"
+      ],
+      "description": "Aircraft class this ORBIT rule applies to"
+    },
+    "hourly_interval": {
+      "type": "number",
+      "description": "Base flight hour interval before ORBIT service is due for this aircraft class"
+    },
+    "cycle_interval": {
+      "type": "number",
+      "description": "Base flight cycle interval before ORBIT service is due for this aircraft class"
+    },
+    "day_interval": {
+      "type": "number",
+      "description": "Base calendar day interval before ORBIT service is due for this aircraft class"
+    },
+    "due_soon_threshold": {
+      "type": "number",
+      "default": 0.8,
+      "description": "Trigger score threshold at which ORBIT service is considered due soon"
+    },
+    "severity_light_multiplier": {
+      "type": "number",
+      "default": 1.1,
+      "description": "Interval multiplier for light use aircraft"
+    },
+    "severity_moderate_multiplier": {
+      "type": "number",
+      "default": 1.0,
+      "description": "Interval multiplier for moderate use aircraft"
+    },
+    "severity_heavy_multiplier": {
+      "type": "number",
+      "default": 0.85,
+      "description": "Interval multiplier for heavy use aircraft"
+    },
+    "severity_charter_high_turn_multiplier": {
+      "type": "number",
+      "default": 0.7,
+      "description": "Interval multiplier for charter or high-turn aircraft"
+    },
+    "severity_harsh_environment_multiplier": {
+      "type": "number",
+      "default": 0.6,
+      "description": "Interval multiplier for aircraft operating in harsh environments"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Internal notes for managers or admins"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this ORBIT rule is active and available for assignment"
+    }
+  },
+  "required": [
+    "rule_name",
+    "aircraft_class"
+  ]
+}
